@@ -2,7 +2,7 @@
 ```
 cnpm install
 cd app && cnpm install
-cd app && npm run start
+npm run start
 ```
 
 #### 打包
