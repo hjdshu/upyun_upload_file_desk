@@ -1,5 +1,7 @@
 #### 开发
 ```
+cnpm install
+cd app && cnpm install
 cd app && npm run start
 ```
 
