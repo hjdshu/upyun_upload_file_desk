@@ -1,0 +1,8 @@
+{
+  "scripts": {
+    "build": "electron-packager ./app updateimg --overwrite --icon=./app/icon.icos"
+  },
+  "devDependencies": {
+    "electron-packager": "^13.0.0"
+  }
+}

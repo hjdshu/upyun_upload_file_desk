@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>上传工具</title>
+    <style>
+      .login_box{
+        position: fixed;
+        z-index: 4;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.57);
+        top: 0;
+        box-sizing: border-box;
+        left: 0;
+      }
+      .login_box .box{
+        width: 300px;
+        height: 200px;
+        background: #fff;
+        border-radius: 20px;
+        padding: 20px; 
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate3d(-50%, -50%, 0);
+      }
+      .login_box .box .p1{
+        text-align: center;
+      }
+      .login_box input{
+        width: 200px;
+        margin: 10px auto;
+        height: 25px;
+        padding: 0 10px;
+        display: block;
+      }
+      .login_box .box .btn{
+        text-align: center;
+        width: 100px;
+        display: block;
+        margin: 15px auto;
+        height: 30px;
+      }
+      .semu{
+        display: flex;
+      }
+      #selected-file{
+        line-height: 40px;
+        margin-left: 10px;
+        font-size: 13px;
+      }
+      #fileup{
+        width: 200px;
+        height: 30px;
+        background: #faf;
+      }
+      #selected-file{
+        margin-bottom: 10px;
+        display: block;
+      }
+      button{
+        width: 180px;
+        height: 40px;
+        display: block;
+        margin-bottom: 20px;
+      }
+      .result{
+        margin-top: 20px;
+      }
+      .result-item{
+        border-bottom: 1px solid rgb(99, 99, 99);
+        cursor: pointer;
+        margin-bottom: 10px;
+        font-size: 12px;
+        padding-bottom: 6px;
+      }
+      .aut{
+        position: fixed;
+        right: 20px;
+        bottom: 20px;
+      }
+      .upload-box{
+        width: 80%;
+        border: 1px solid rgb(156, 155, 155);
+        border-radius: 10px;
+        padding: 20px;
+        display: flex;
+      }
+      .upload-box .t1 {
+        margin-right: 40px;
+        position: relative;
+      }
+      .upload-box .t1::after{
+        content: '';
+        position: absolute;
+        width: 1px;
+        height: 50px;
+        background: rgba(34, 34, 34, 0.295);
+        right: -20px;
+        top: -5px;
+      }
+      .upload-box .t2{
+        margin-right: 10px;
+      }
+      .upload-box .t3{
+        height: 40px;
+        padding: 5px;
+        box-sizing: border-box;
+        line-height: 30px;
+      }
+      .img-box{
+        background: #000;
+        width: 50px;
+        height: 50px;
+        position: relative;
+        overflow: hidden;
+      }
+      .img-box img{
+        width: 80%;
+        position: absolute;
+        display: block;
+        left: 10%;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+      .res_tit{
+        display: flex;
+      }
+      .res_tit button{
+        height: 30px;
+        width: 350px;
+        margin-left: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>上传到又拍云</h1>
+    <h5>目前支持的文件格式：.jpg .png .gif .js</h2>
+    <!-- All of the Node.js APIs are available in this renderer process. -->
+    <div id="main">
+
+      <div class="login_box" v-if="!logined">
+        <div class="box">
+          <div class="p1">请先输入又拍云账户密码：</div>
+          <input v-model="up_s_n" type="text" class="svc" placeholder="service_name">
+          <input v-model="up_o_n" type="text" class="user" placeholder="operator_name">
+          <input v-model="up_o_p" type="password" class="pas" placeholder="operator_password">
+          <button class="btn" @click="saveNamePass">保存</button>
+        </div>
+      </div>
+
+      <div class="semu">
+        <button id="inputfilepath" @click="openFiles">选择/更改目录</button>
+        <div id='selected-file'></div>
+      </div>
+      
+      <div class="upload-box">
+        <button class="t-su t1" @click="startUpload(false)">一键上传(推荐:自动生成地址)</button>
+        <button class="t-su t2" @click="startUpload(true)">覆盖上传(自定义生成地址)</button>
+        <input type="text" class="t3" v-model="overwriteVersion" placeholder="覆盖上传文件版本号">
+      </div>
+
+
+      <div class="result" v-if="listResult.length">
+        <div class="res_tit">
+          上传结果:
+          <button class="clearbtn" @click="clearResult">清除结果（如重新上传已在结果里的文件，请使用此方法）</button>
+        </div>
+        <div id="upres">
+          <div class="result-item" v-for="item in listResult" >
+            {{item.url}} <span style="color:#faf" @click="copyItem(item.url)">点击复制地址</span>&nbsp;<span @click="getImgBase(item.url, true)">点击复制代码</span>
+            <div class="img-box" v-if="isImg(item.url)" @click="getImgBase(item.url)">
+                <img v-bind:src="item.url" alt="">
+            </div>
+          </div>
+        </div>
+        
+      </div>
+
+
+      <div class="aut">@author hejia@codoon.com</div>
+      <!-- <input type="file" onchange="inputChange(this)" id="fileup"> -->
+    </div>
+
+    <script>
+      // You can also require other files to run in this process
+      require('./renderer.js')
+    </script>
+  </body>
+</html>
