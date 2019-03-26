@@ -16,7 +16,7 @@
       }
       .login_box .box{
         width: 300px;
-        height: 200px;
+        height: 240px;
         background: #fff;
         border-radius: 20px;
         padding: 20px; 
@@ -132,6 +132,13 @@
         width: 350px;
         margin-left: 20px;
       }
+      .edit_sevice{
+        text-decoration: underline;
+        color: rgb(156, 148, 78); 
+        font-size: 12px;
+        margin-bottom: 10px;
+        cursor: pointer;
+      }
     </style>
   </head>
   <body>
@@ -146,10 +153,13 @@
           <input v-model="up_s_n" type="text" class="svc" placeholder="service_name">
           <input v-model="up_o_n" type="text" class="user" placeholder="operator_name">
           <input v-model="up_o_p" type="password" class="pas" placeholder="operator_password">
+          <input v-model="up_b_u" type="text" class="user" placeholder="base_url: imgs or file's hostname">
+   
           <button class="btn" @click="saveNamePass">保存</button>
         </div>
       </div>
 
+      <div class="edit_sevice" @click="logined=false">当前服务器: {{baseUrl}}, 点击修改上传服务器</div>
       <div class="semu">
         <button id="inputfilepath" @click="openFiles">选择/更改目录</button>
         <div id='selected-file'></div>
@@ -178,8 +188,7 @@
         
       </div>
 
-
-      <div class="aut">@author hejia@codoon.com</div>
+      <div class="aut">@author github.com/hjdshu</div>
       <!-- <input type="file" onchange="inputChange(this)" id="fileup"> -->
     </div>
 

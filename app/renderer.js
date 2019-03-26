@@ -36,10 +36,13 @@ new Vue({
       up_s_n: '',
       up_o_n: '',
       up_o_p: '',
+      up_b_u: '',
+      baseUrl: '',
       logined: false,
       path: '123',
       upyunObj: null,
       listResult: [],
+      httpName: '',
       overwriteVersion: '', //覆盖上传版本号
       resultType: 0 // 默认显示结果类型
     }
@@ -56,6 +59,7 @@ new Vue({
       window.localStorage.upyun_service_name = this.up_s_n
       window.localStorage.upyun_operator_name = this.up_o_n
       window.localStorage.upyun_operator_password = this.up_o_p
+      window.localStorage.upyun_base_url = this.up_b_u
       this.login()
     },
     login () {
@@ -67,6 +71,7 @@ new Vue({
           operator_name: window.localStorage.upyun_operator_name,
           operator_password: window.localStorage.upyun_operator_password
         }
+        this.baseUrl = window.localStorage.upyun_base_url
         this.upyunObj = new UPYUN(
           loginUpy.service_name,
           loginUpy.operator_name,
@@ -152,12 +157,11 @@ new Vue({
                 callback(err);
               } else {
                 if (result.statusCode !== 200) {
-                  console.log(result)
                   callback('上传失败，请检查账户密码是否正确')
                   __.logined = false
                   return
                 }
-                fileInfo.url = "https://webapp.codoon.com" + filename;
+                fileInfo.url = __.baseUrl + filename;
                 callback(null, fileInfo);
               }
             })

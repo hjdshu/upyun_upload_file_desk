@@ -15,6 +15,8 @@ ipcMain.on('open-file-dialog', (event) => {
 let mainWindow
 
 function createWindow () {
+  // Create the browser window.
+  mainWindow = new BrowserWindow({width: 800, height: 600})
 
   if (process.platform === 'darwin') {
     var template = [{
@@ -22,7 +24,7 @@ function createWindow () {
       submenu: [
           { label: "About Application", selector: "orderFrontStandardAboutPanel:" },
           { type: "separator" },
-          { label: "Quit", accelerator: "Command+Q", click: function() { app.quit(); }}
+          { label: "Relaunch", accelerator: "Command+R", click: function() { mainWindow.reload()}}
       ]}, {
       label: "Edit",
       submenu: [
@@ -39,9 +41,6 @@ function createWindow () {
   } else {
     Menu.setApplicationMenu(null)
   }
-
-  // Create the browser window.
-  mainWindow = new BrowserWindow({width: 800, height: 600})
 
   // and load the index.html of the app.
   mainWindow.loadFile('index.html')
